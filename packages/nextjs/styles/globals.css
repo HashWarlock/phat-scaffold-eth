@@ -30,3 +30,39 @@ p {
 .btn.btn-ghost {
   @apply shadow-none;
 }
+
+.profiles-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 20px;
+  background-color: #6f888f;
+}
+
+.profile-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+}
+
+.thumbnail {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.button-dig {
+  @apply shadow-md;
+  margin-top: 10px;
+  outline: #cdfa50;
+  border: black;
+  padding: 10px 32px;
+  background-color: #cdfa50;
+  border-radius: 50px;
+  color: black;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+
+}

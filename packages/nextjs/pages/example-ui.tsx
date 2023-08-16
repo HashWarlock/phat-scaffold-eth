@@ -1,7 +1,6 @@
-import type { NextPage } from "next";
-import { MetaHeader } from "~~/components/MetaHeader";
-import { ContractData } from "~~/components/example-ui/ContractData";
-import { ContractInteraction } from "~~/components/example-ui/ContractInteraction";
+import type {NextPage} from "next";
+import {MetaHeader} from "~~/components/MetaHeader";
+import { ExploreProfiles } from "~~/components/example-ui/ExploreProfiles";
 
 const ExampleUI: NextPage = () => {
   return (
@@ -14,9 +13,8 @@ const ExampleUI: NextPage = () => {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree&display=swap" rel="stylesheet" />
       </MetaHeader>
-      <div className="grid lg:grid-cols-2 flex-grow" data-theme="exampleUi">
-        <ContractInteraction />
-        <ContractData />
+      <div className="grid flex-grow" data-theme="exampleUi">
+        <ExploreProfiles />
       </div>
     </>
   );
