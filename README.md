@@ -1,4 +1,5 @@
-# 🏗 Scaffold-ETH 2
+# 🏗 Phat-Scaffold-ETH
+> **Note**: This is a fork of [Scaffold-ETH 2](https://github.com/scaffold-eth/scaffold-eth-2) to provide an EVM developer environment to build Consumer Contract dApps to connect to Phala Network's Phat Contract via [Phat Bricks UI](https://bricks.phala.network) :bricks:. To better understand the [Consumer Contract](https://github.com/Phala-Network/lensapi-oracle-consumer-contract) link for more details. Alos, check out the [Off-Chain Rollup](https://github.com/Phala-Network/phat-offchain-rollup/blob/main/TechnicalDetails.md) technical details in the link to understand how Phala's Phat Contract makes cross-chain communication possible no matter the blockchain architecture.
 
 🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on the Ethereum blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
 
