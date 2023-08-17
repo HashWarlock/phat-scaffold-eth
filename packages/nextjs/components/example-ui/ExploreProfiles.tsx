@@ -1,6 +1,9 @@
 import {development, LensClient, PaginatedResult, ProfileFragment, ProfileSortCriteria} from "@lens-protocol/client";
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import Modal from 'react-modal';
+import styles from "~~/styles/home.module.css";
+
+Modal.setAppElement(':root');
 
 const lensClient = new LensClient({
   environment: development
@@ -71,30 +74,60 @@ export const ExploreProfiles = () => {
 
   const profileIds = Array.from(profilesMap.keys());
   return (
-    <div className="profiles-container" >
+    <div className={styles.profileGrid} >
         {profileIds.map((profileId, index) => (
-          <div ref={index === profileIds.length - 1 ? lastProfileElementRef : null} key={profileId} onClick={() => onProfileClick(profileId)} className="profile-card">
+          <div ref={index === profileIds.length - 1 ? lastProfileElementRef : null} key={profileId} onClick={() => onProfileClick(profileId)} className={styles.profileContainer}>
             <picture><img className="thumbnail" src={getProfilePicture(profileId)} alt="Profile picture" /></picture>
-            <h3>{profilesMap.get(profileId)?.name}</h3>
-            <text>{profilesMap.get(profileId)?.id}</text>
+            <h2>{profilesMap.get(profileId)?.name}</h2>
+            <br />@{profilesMap.get(profileId)?.handle}
+            <br />{profilesMap.get(profileId)?.id}
           </div>
         ))}
       <Modal
         isOpen={selectedProfile !== null}
         onRequestClose={() => setSelectedProfile(null)}
-        className="flex flex-col justify-center items-center bg-[url('/assets/mojo-da-king.png')] bg-[length:50%_100%] py-10 px-5 sm:px-0 lg:py-auto max-w-[100vw] "
+        className={styles.modalContent}
       >
-        <h2>
-          {selectedProfile?.name ?? selectedProfile?.id}.lens
-        </h2>
-        <picture><img className="thumbnail" src={getProfilePicture(selectedProfile?.id as string)} alt="Profile picture" /></picture>
-        <p>{selectedProfile?.id}</p>
-        <p>{selectedProfile?.bio}</p>
-        <p>Total Followers: {selectedProfile?.stats.totalFollowers}</p>
-        <p>Total Following: {selectedProfile?.stats.totalFollowing}</p>
-        <button className="button-dig" onClick={() => setSelectedProfile(null)}>Dig⛏</button>
-        <button className="button-dig" onClick={() => setSelectedProfile(null)}>Close</button>
-      </Modal>
+        <div className={styles.div}>
+          <div className={styles.overlap}>
+            <div className={styles.title}> @{selectedProfile?.handle}</div>
+            <picture><img className={styles.ellipse} src={getProfilePicture(selectedProfile?.id as string)} alt="Profile picture" /></picture>
+          </div>
+          <div className={styles.div2}>
+            <div className={styles.modalHeader}>
+              <div className={styles.text}>
+                Profile Stats
+              </div>
+            </div>
+            <div className={styles.modalBody}>
+              <div className={styles.textWrapper}>
+                Profile ID: {selectedProfile?.id}
+                <br />
+                Profile Name: {selectedProfile?.id}
+                <br />
+                Total Followers: {selectedProfile?.stats.totalFollowers}
+                <br />
+                Total Following: {selectedProfile?.stats.totalFollowing}
+                <br />
+              </div>
+            </div>
+            <div className={styles.modalFooter}>
+              <div className={styles.group}>
+                <div className={styles.overlapGroupWrapper}>
+                  <div className={styles.overlapGroup}>
+                    <button className={styles.textWrapper2} onClick={() => setSelectedProfile(null)}>Close</button>
+                  </div>
+                </div>
+                <div className={styles.overlapWrapper}>
+                  <div className={styles.divWrapper}>
+                    <button className={styles.textWrapper3} onClick={() => setSelectedProfile(null)}>Dig ⛏</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </Modal>
     </div>
   );
 };
