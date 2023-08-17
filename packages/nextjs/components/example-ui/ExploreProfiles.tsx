@@ -103,26 +103,27 @@ export const ExploreProfiles = () => {
               <div className={styles.textWrapper}>
                 Profile ID: {selectedProfile?.id}
                 <br />
-                Profile Name: {selectedProfile?.id}
+                Profile Name: {selectedProfile?.name}
                 <br />
                 Total Followers: {selectedProfile?.stats.totalFollowers}
                 <br />
                 Total Following: {selectedProfile?.stats.totalFollowing}
                 <br />
+                Total Posts: {selectedProfile?.stats.totalPosts}
               </div>
             </div>
             <div className={styles.modalFooter}>
               <div className={styles.group}>
-                <div className={styles.overlapGroupWrapper}>
+                <button className={styles.overlapGroupWrapper} onClick={() => setSelectedProfile(null)}>
                   <div className={styles.overlapGroup}>
-                    <button className={styles.textWrapper2} onClick={() => setSelectedProfile(null)}>Close</button>
+                    <button className={styles.textWrapper2}>Close</button>
                   </div>
-                </div>
-                <div className={styles.overlapWrapper}>
+                </button>
+                <button className={styles.overlapWrapper} onClick={() => setSelectedProfile(null)}>
                   <div className={styles.divWrapper}>
-                    <button className={styles.textWrapper3} onClick={() => setSelectedProfile(null)}>Dig ⛏</button>
+                    <div className={styles.textWrapper3}>Dig ⛏</div>
                   </div>
-                </div>
+                </button>
               </div>
             </div>
           </div>
