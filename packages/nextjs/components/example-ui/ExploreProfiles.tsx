@@ -1,4 +1,4 @@
-import {development, LensClient, PaginatedResult, ProfileFragment, ProfileSortCriteria} from "@lens-protocol/client";
+import {development, production, LensClient, PaginatedResult, ProfileFragment, ProfileSortCriteria} from "@lens-protocol/client";
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import Modal from 'react-modal';
 import styles from "~~/styles/home.module.css";
@@ -6,7 +6,7 @@ import styles from "~~/styles/home.module.css";
 Modal.setAppElement(':root');
 
 const lensClient = new LensClient({
-  environment: development
+  environment: development // use development for testnet and production for mainnet
 });
 
 export const ExploreProfiles = () => {

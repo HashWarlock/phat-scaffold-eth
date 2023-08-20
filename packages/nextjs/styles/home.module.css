@@ -74,14 +74,14 @@
 
 .modalContent {
     background-color: transparent;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    width: 100%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .div {
-    background-color: white;
+    background-color: #7b9630;
     box-shadow: 0px 15px 40px 0px rgba(0, 0, 0, 0.40), 0px 5px 10px 0px rgba(0, 0, 0, 0.20), 0px 0px 0px 1px rgba(0, 0, 0, 0.10);
     border: 1px none;
     height: 555px;
@@ -126,7 +126,7 @@
 
 .div2 {
     align-items: center;
-    background-color: white;
+    background-color: floralwhite;
     border-radius: 6px;
     box-shadow: 0px 15px 40px 0px rgba(0, 0, 0, 0.40), 0px 5px 10px 0px rgba(0, 0, 0, 0.20), 0px 0px 0px 1px rgba(0, 0, 0, 0.10);
     display: flex;
