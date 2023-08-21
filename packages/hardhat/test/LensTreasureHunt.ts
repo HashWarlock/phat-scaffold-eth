@@ -1,15 +1,15 @@
 //import { expect } from "chai";
 import { ethers } from "hardhat";
-import { PhatConsumerContract } from "../typechain-types";
+import { LensTreasureHunt } from "../typechain-types";
 
-describe("PhatConsumerContract", function () {
+describe("LensTreasureHunt", function () {
   // We define a fixture to reuse the same setup in every test.
 
-  let phatConsumerContract: PhatConsumerContract;
+  let phatConsumerContract: LensTreasureHunt;
   before(async () => {
     const [owner] = await ethers.getSigners();
-    const phatConsumerContractFactory = await ethers.getContractFactory("PhatConsumerContract");
-    phatConsumerContract = (await phatConsumerContractFactory.deploy(owner.address)) as PhatConsumerContract;
+    const phatConsumerContractFactory = await ethers.getContractFactory("LensTreasureHunt");
+    phatConsumerContract = (await phatConsumerContractFactory.deploy(owner.address)) as LensTreasureHunt;
     await phatConsumerContract.deployed();
   });
 

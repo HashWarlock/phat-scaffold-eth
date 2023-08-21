@@ -1,7 +1,9 @@
-import {development, production, LensClient, PaginatedResult, ProfileFragment, ProfileSortCriteria} from "@lens-protocol/client";
+import {development, LensClient, PaginatedResult, ProfileFragment, ProfileSortCriteria} from "@lens-protocol/client";
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import Modal from 'react-modal';
+import {useScaffoldContractRead, useScaffoldContractWrite} from "~~/hooks/scaffold-eth";
 import styles from "~~/styles/home.module.css";
+import {etherUnits} from "viem";
 
 Modal.setAppElement(':root');
 
@@ -13,6 +15,30 @@ export const ExploreProfiles = () => {
   const [profilesMap, setProfilesMap] = useState<Map<string, ProfileFragment>>(new Map());
   const [paginatedResult, setPaginatedResult] = useState<PaginatedResult<ProfileFragment> | null>(null);
   const [selectedProfile, setSelectedProfile] = useState<ProfileFragment | null>(null);
+
+  const getDigCostNumber = (_digCost: bigint) => {
+    const multiply = 10 ** etherUnits.wei;
+    return Number(_digCost) / multiply;
+  }
+  const { data: currentDigCost } = useScaffoldContractRead({
+    contractName: "LensTreasureHunt",
+    functionName: "digCost",
+  });
+
+  const { data: lensTreasureHuntNftIdZerosLeft } = useScaffoldContractRead({
+    contractName: "LensTreasureHunt",
+    functionName: "lensTreasureHuntNftIdZerosLeft",
+  });
+
+  const { writeAsync, isLoading } = useScaffoldContractWrite({
+    contractName: "LensTreasureHunt",
+    functionName: "dig",
+    args: [selectedProfile?.id],
+    value: `${getDigCostNumber(currentDigCost ?? 0n)}`,
+    onBlockConfirmation: txnReceipt => {
+      console.log("📦 Transaction blockHash", txnReceipt.blockHash);
+    },
+  });
 
   const observer = useRef<IntersectionObserver | null>(null);
   const lastProfileElementRef = useCallback(node => {
@@ -119,7 +145,7 @@ export const ExploreProfiles = () => {
                     <button className={styles.textWrapper2}>Close</button>
                   </div>
                 </button>
-                <button className={styles.overlapWrapper} onClick={() => setSelectedProfile(null)}>
+                <button className={styles.overlapWrapper} onClick={() => writeAsync({args: [selectedProfile?.id]})}>
                   <div className={styles.divWrapper}>
                     <div className={styles.textWrapper3}>Dig ⛏</div>
                   </div>

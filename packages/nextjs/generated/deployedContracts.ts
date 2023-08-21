@@ -4,7 +4,7 @@ const contracts = {
       chainId: "31337",
       name: "localhost",
       contracts: {
-        PhatConsumerContract: {
+        LensTreasureHunt: {
           address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
           abi: [
             {
@@ -13,6 +13,11 @@ const contracts = {
                   internalType: "address",
                   name: "phatAttestor",
                   type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "_digCost",
+                  type: "uint256",
                 },
               ],
               stateMutability: "nonpayable",
@@ -152,6 +157,45 @@ const contracts = {
                 {
                   indexed: false,
                   internalType: "uint256",
+                  name: "_digCost",
+                  type: "uint256",
+                },
+              ],
+              name: "DigCostIncrease",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: false,
+                  internalType: "string",
+                  name: "err",
+                  type: "string",
+                },
+              ],
+              name: "ErrorMintFail",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: false,
+                  internalType: "string",
+                  name: "err",
+                  type: "string",
+                },
+              ],
+              name: "ErrorMissingLensProfile",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: false,
+                  internalType: "uint256",
                   name: "reqId",
                   type: "uint256",
                 },
@@ -207,6 +251,51 @@ const contracts = {
               anonymous: false,
               inputs: [],
               name: "MetaTxDecoded",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "nftId",
+                  type: "uint256",
+                },
+              ],
+              name: "MintSucceeded",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "reqId",
+                  type: "uint256",
+                },
+                {
+                  indexed: false,
+                  internalType: "string",
+                  name: "profileId",
+                  type: "string",
+                },
+              ],
+              name: "NewDigRequest",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: false,
+                  internalType: "address",
+                  name: "recipient",
+                  type: "address",
+                },
+              ],
+              name: "NewTreasureRecipient",
               type: "event",
             },
             {
@@ -329,6 +418,44 @@ const contracts = {
               type: "event",
             },
             {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "index",
+                  type: "uint256",
+                },
+                {
+                  indexed: false,
+                  internalType: "contract ITokenERC721",
+                  name: "nftAddress",
+                  type: "address",
+                },
+              ],
+              name: "SetLensTreasureHuntNftAddress",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [],
+              name: "TreasureHuntOfficiallyEnded",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "split",
+                  type: "uint256",
+                },
+              ],
+              name: "TreasureRecipientsRewarded",
+              type: "event",
+            },
+            {
               inputs: [],
               name: "ATTESTOR_ROLE",
               outputs: [
@@ -349,6 +476,32 @@ const contracts = {
                   internalType: "bytes32",
                   name: "",
                   type: "bytes32",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "string",
+                  name: "profileId",
+                  type: "string",
+                },
+              ],
+              name: "dig",
+              outputs: [],
+              stateMutability: "payable",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "digCost",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
                 },
               ],
               stateMutability: "view",
@@ -435,16 +588,35 @@ const contracts = {
               type: "function",
             },
             {
-              inputs: [
+              inputs: [],
+              name: "lensTreasureHuntNftIdZerosLeft",
+              outputs: [
                 {
-                  internalType: "bytes",
-                  name: "malformedData",
-                  type: "bytes",
+                  internalType: "uint8",
+                  name: "",
+                  type: "uint8",
                 },
               ],
-              name: "malformedRequest",
-              outputs: [],
-              stateMutability: "nonpayable",
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              name: "lensTreasureHuntNfts",
+              outputs: [
+                {
+                  internalType: "contract ITokenERC721",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              stateMutability: "view",
               type: "function",
             },
             {
@@ -659,6 +831,19 @@ const contracts = {
               type: "function",
             },
             {
+              inputs: [],
+              name: "ownersCut",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
               inputs: [
                 {
                   internalType: "bytes",
@@ -737,14 +922,20 @@ const contracts = {
             {
               inputs: [
                 {
-                  internalType: "string",
-                  name: "profileId",
-                  type: "string",
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
                 },
               ],
-              name: "request",
-              outputs: [],
-              stateMutability: "nonpayable",
+              name: "requestsByUsers",
+              outputs: [
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              stateMutability: "view",
               type: "function",
             },
             {
@@ -761,6 +952,13 @@ const contracts = {
                 },
               ],
               name: "revokeRole",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "rewardTreasureRecipients",
               outputs: [],
               stateMutability: "nonpayable",
               type: "function",
@@ -820,6 +1018,55 @@ const contracts = {
             {
               inputs: [
                 {
+                  internalType: "uint256",
+                  name: "_digCost",
+                  type: "uint256",
+                },
+              ],
+              name: "setDigCost",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "_index",
+                  type: "uint256",
+                },
+                {
+                  internalType: "contract ITokenERC721",
+                  name: "_nftAddress",
+                  type: "address",
+                },
+              ],
+              name: "setLensTreasureHuntNftAddress",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "_index",
+                  type: "uint256",
+                },
+                {
+                  internalType: "string",
+                  name: "_lensTreasureHuntNftsURI",
+                  type: "string",
+                },
+              ],
+              name: "setLensTreasureHuntNftURI",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
                   internalType: "bytes4",
                   name: "interfaceId",
                   type: "bytes4",
@@ -864,6 +1111,32 @@ const contracts = {
                 },
               ],
               name: "transferOwnership",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              name: "treasureRecipients",
+              outputs: [
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "withdrawOwnersCut",
               outputs: [],
               stateMutability: "nonpayable",
               type: "function",
